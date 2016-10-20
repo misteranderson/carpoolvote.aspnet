@@ -1,0 +1,23 @@
+{
+  "name": "carpoolvote.aspnet",
+  "version": "1.0.0",
+  "description": "CarPoolVote in ASP.NET",
+  "main": "index.html",
+  "dependencies": {
+    "yo": "^1.8.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misteranderson/carpoolvote.aspnet.git"
+  },
+  "author": "Eric C. Anderson <eric@ericanderson.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/misteranderson/carpoolvote.aspnet/issues"
+  },
+  "homepage": "https://github.com/misteranderson/carpoolvote.aspnet#readme"
+}
