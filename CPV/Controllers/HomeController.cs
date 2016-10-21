@@ -1,4 +1,5 @@
 using System;
+using CPV;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,18 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPV.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : CPVController
     {
-        public IActionResult Index()
+        public override IActionResult Index(string themeName, string lang)
         {
-			// Brand:
-			// {CarPoolVote}
-			// {Souls2ThePolls}
-			
-			// Language:
-			// {English}
-			// {Spanish}
-			return View();
+
+            ViewData["Title"] = "Home Page";
+            ViewData["BrandName"] = "Carpool Vote";
+
+
+            if (lang == CPV.CPVConstants.LANGUAGE_SPANISH) {
+                ViewData["Title"] = "Página de inicio";
+                ViewData["BrandName"] = "Compartir coche votar";
+            }
+            return base.Index(themeName,lang);
         }
 
         public IActionResult About()

@@ -1,81 +1,92 @@
 ﻿@using CPV
 @model CPV.CPVBasicViewModel
 @{
+    // ViewData["Language"] = Model.Language ?? "en_US";
+    // ViewData["CurrentLanguageName"] = Model.LanguageName ?? "English";
+    // ViewData["ThemeName"] = Model.ThemeName ?? "carpoolvote";
+
     // =============================================================
-    ViewData["ElectionDay"] = new DateTime(CPV.CPVConstants.ELECTION_DAY_2016_YR, CPV.CPVConstants.ELECTION_DAY_2016_MM, CPV.CPVConstants.ELECTION_DAY_2016_DD);
+    ViewData["Title"] = "Our Story";
+    ViewData["BrandName"] = "Carpool Vote";
+    ViewData["Language"] = ViewData["Language"] ?? "es"; // en_US, es
+                                                         // ViewData["ThemeName"] = "carpoolvote";  // Souls2ThePolls
+    ViewData["ElectionDay"] = new DateTime(
+        CPV.CPVConstants.ELECTION_DAY_2016_YR,
+        CPV.CPVConstants.ELECTION_DAY_2016_MM,
+        CPV.CPVConstants.ELECTION_DAY_2016_DD
+        );
+
     ViewData["APIVersion"] = "v1.1"; // dev ,v2.0
-    // =============================================================
 
+    // ViewData["ThemeName"] = ViewData["ThemeName"] ?? "souls2thepolls";
 
     // =============================================================
+    // English Default Strings:
     String StringRiders = "Riders";
     String StringDrivers = "Drivers";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    String HeaderOurStory = "Our Story";
+    String HeaderHowToClaim = "How To Claim Your Vote";
+    String HeaderHowHelp = "Can I help some other way?";
+
+    if (ViewData["Language"] == "es")
     {
         StringRiders = "Pasajero";
         StringDrivers = "Automovilista";
-    }
-
-    String HeaderOurStory   = "Our Story";
-    String HeaderHowToClaim = "How To Claim Your Vote";
-    String HeaderHowHelp = "Can I help some other way?";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
-    {
         HeaderOurStory = "Nuestra historia";
         HeaderHowToClaim = "Cómo reclamar Su Voto";
         HeaderHowHelp = "Puedo ayudar de alguna otra manera?";
     }
 
     String String1 = "Every American DESERVES a Vote";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String1 = "Cada Estadounidense MERECE un voto";
     }
 
     String String2 = "We connect volunteer drivers with anybody who needs a ride to claim their vote.";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String2 = "Ponemos en contacto a conductores voluntarios con cualquier persona que necesita un paseo para reclamar su voto.";
     }
 
     String String3 = "Need a ride to the polls or voter I.D. office?";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String3 = "¿Necesita que lo lleven a las urnas o votantes de identificación oficina?";
     }
 
     String String4 = "Fill in the form to let us know when and where you need a ride. We'll do our best to match you with a driver!";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String4 = "Rellene el formulario para hacernos saber cuándo y dónde se necesita transporte. Haremos nuestro mejor esfuerzo para que coincida con un conductor!";
     }
 
     String String5 = "I need a ride";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String5 = "Necesito que me lleven";
     }
 
     String String6 = "Drivers";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String6 = "El Conductors";
     }
 
     String String7 = "Do you have a spare seat to help get somebody to the polls or the voter I.D. office?";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String7 = "¿Tiene un asiento libre para ayudar a alguien a las urnas oa la oficina de identificación de los votantes?";
     }
 
     String String8 = "Fill in the form to let us know when and where you'll be driving, and we'll match you with a rider!";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String8 = "Rellene el formulario para hacernos saber cuando y donde podrás ser la conducción, y vamos a hacer coincidir con un jinete! ";
     }
 
     String String9 = "I can offer a ride";
-    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    if (ViewData["Language"] == "es")
     {
         String9 = "Puedo ofrecer un paseo";
     }
@@ -397,7 +408,7 @@
             <div class="bannerbox__content">
                 <p>In many states, new voting rules have made it more difficult for people to get to polling stations. These rules particularly affect People of Color, People with Disabilities, Young People, Elderly People, and Women.Carpool Vote is a tool to fight back against an unfair political system in the 2016 election.</p>
                 <p>We connect volunteer drivers with anybody who needs a ride - to the polls or voter I.D. office.</p>
-                <p> <a href="@Url.Action("Index","Story", new { themeName = Model.ThemeName, lang = Model.LanguageCode })" class="story" id="story-button"> Read more </a> </p>
+                <p> <a href="/story" class="story" id="story-button"> Read more </a> </p>
             </div>
         </div>
         <div class="bannerbox" id="howtoclaim">
@@ -474,7 +485,7 @@
             </div>
         </div>
         <div class="bannerbox" id="righttovote">
-            @if (Model.LanguageCode == "en_US")
+            @if (ViewData["Language"] == "en_US")
             {
                 <h3 class="bannerbox__title">Voting support</h3>
                 <div class="bannerbox__content">
@@ -488,7 +499,7 @@
                     </ul>
                 </div>
             }
-            @if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+            @if (ViewData["Language"] == "es")
             {
                 <h3 class="bannerbox__title">Voting support</h3>
                 <div class="bannerbox__content">

@@ -1,29 +1,49 @@
-﻿<!DOCTYPE html>
+﻿@using CPV
+@model CPV.CPVBasicViewModel
+<!DOCTYPE html>
 @{
+    // ========================================================
+    // ViewData["Language"] = Model.Language;                  // ?? "en_US";
+    // ViewData["CurrentLanguageName"] = Model.LanguageName;   // ?? "English";
+    // ViewData["ThemeName"] = Model.ThemeName;                // ?? "carpoolvote";
+    // ========================================================
+
+    // ViewData["Language"] = Model.Language ?? "en_US";
+    // ViewData["CurrentLanguageName"] = Model.LanguageName ?? "English";
+    // ViewData["ThemeName"] = Model.ThemeName ?? "carpoolvote";
+
     String String0 = "Need voter support? Call ";
-    if (ViewData["Langugage"] == "es")
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
         String0 = "Necesidad de apoyo de los votantes? Llame ";
     }
 
+    String StringHelpPhone = "1-866-OURVOTE";
+    String StringHelpPhoneDigits = "18666878683";
+    if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_SPANISH, StringComparison.OrdinalIgnoreCase))
+    {
+        StringHelpPhone = "(888)VE-Y-VOTA";
+        StringHelpPhoneDigits = "18888398682";
+    }
+
+
     String String10 = "Our Story";
-    if (ViewData["Langugage"] == "es")
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
         String10 = "Nuestra historia";
     }
 
     String String11 = "How it works";
-    if (ViewData["Langugage"] == "es")
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
         String11 = "Cómo funciona";
     }
 
     String String12 = "Support";
-    if (ViewData["Langugage"] == "es")
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
         String12 = "Ayuda";
     }
-
 
     //  
     //  
@@ -32,7 +52,6 @@
 }
 
 <html lang="en-us">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,7 +64,7 @@
     <meta property="og:title" content="Carpool Vote - Vote America" />
     <meta property="og:description" content="Get a ride, or share a ride to vote, or register to vote. Support every American's right to vote!" />
     <meta property="og:image" content="http://carpoolvote/com/res/img/logo_fb.png?v=2" />
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="@Href("~/favicon.ico")">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link type="text/css" rel="stylesheet" href="@Href("~/res/jquery.datetimepicker.min.css")">
@@ -99,7 +118,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     <header class="header">
-        <p class="support-banner">@String0 <a href="tel:18666878683">1-866-OURVOTE</a></p>
+        <p class="support-banner">@String0 <a href="tel:@StringHelpPhoneDigits">@StringHelpPhone</a></p>
         <nav class="nav wrapper">
             <a href="/" class="logo">
                 <img id="logo" class="logo__img" src="@Href("~/res/img/logo.jpg")" alt="Carpool Vote" width=709 height=187 />
@@ -117,14 +136,28 @@
             </script>
             <ul id="nav-links" class="nav__links">
                 <li class="nav__item nav__story">
-                    <a href="/story" class="nav__link story" id="story-link">@String10</a>
+                    <a href="@Url.Action("Index","Story", new { themeName = Model.ThemeName, lang = Model.LanguageCode })" class="nav__link story" id="story-link">@String10</a>
                 </li>
                 <li class="nav__item nav__how">
-                    <a href="#howtoclaim" class="nav__link">@String11</a>
+                    <a href="@Url.Action("Index","Home", new { themeName = Model.ThemeName, lang = Model.LanguageCode })#howtoclaim" class="nav__link">@String11</a>
                 </li>
                 <li class="nav__item nav__support">
-                    <a href="#support" class="nav__link">@String12</a>
+                    <a href="@Url.Action("Index","Home", new { themeName = Model.ThemeName, lang = Model.LanguageCode })#support" class="nav__link">@String12</a>
                 </li>
+                @if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_ENGLISH,StringComparison.OrdinalIgnoreCase))
+                {
+                    <li class="nav__item nav__language">
+                        @Html.ActionLink(CPV.CPVConstants.LANGUAGE_SPANISH_NAME,"Index",null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_SPANISH }, new { @class = "nav__link" })
+                        @*<a href="@Url.Action("Index", )" class="nav__link"></a>*@
+                    </li>
+                }
+                else
+                {
+                    <li class="nav__item nav__language">
+                        @Html.ActionLink(CPV.CPVConstants.LANGUAGE_ENGLISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH }, new { @class = "nav__link" })
+                        @*<a href="@Url.Action("Index", new {themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH})" class="nav__link">@CPV.CPVConstants.LANGUAGE_ENGLISH_NAME</a>*@
+                    </li>
+                }
             </ul>
             <ul class="social">
                 <li role="presentation" class="social__twitter">
@@ -141,14 +174,28 @@
             </ul>
         </nav>
     </header>
-    @*<div class="content">
-            @await Html.PartialAsync("_LoginPartial")
-        </div>*@
+
+@*
     <div class="content">
+            @await Html.PartialAsync("_LoginPartial")
+        </div>
+*@
+
+<div class="content">
+
+    @*<div id="LanguageNote">
+<pre>
+    Currently Viewing Site: 
+    Language Name:  @ViewData["CurrentLanguageName"]  [@Model.LanguageName]
+    Language     :  @ViewData["Language"]             [@Model.Language]
+    Theme        :  @ViewData["ThemeName"]            [@Model.ThemeName]
+</pre>
+        </div>*@
 
         @RenderBody()
 
     </div>
+
     <footer class="footer">
         <div class="wrapper">
             <p class="footer__text">
@@ -161,6 +208,7 @@
             </form>
         </div>
     </footer>
+
     <noscript>
         <style>
             .forms {
@@ -187,25 +235,28 @@
         ga('create', 'UA-1858235-15', 'auto');
         ga('send', 'pageview');
     </script>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/salvattore/1.0.9/salvattore.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
     <script type="text/javascript" src="res/jquery-dateFormat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="res/jquery.datetimepicker.full.min.js"></script>
-    <script type="text/javascript" src="res/nouislider.min.js"></script>
+    <script type="text/javascript" src="@Href("~/res/jquery.datetimepicker.full.min.js")"></script>
+    <script type="text/javascript" src="@Href("~/res/nouislider.min.js")"></script>
     <!-- dropdown for issue #37 - voting registrations per state -->
-    <script type="text/javascript" src="dropdown.js"></script>
+    <script type="text/javascript" src="@Href("~/dropdown.js")"></script>
     <script>
         $(document).ready(function () {
-            if (window.location.search === '?souls2thepolls') {
-                $('a[href^="/"]').each(function () {
-                    $(this).attr('href', $(this).attr('href') + '?souls2thepolls');
-                });
-            }
+            // Rewrite all hyperlinks to use a single query string.
+            // if (window.location.search === '?souls2thepolls') {
+            //     $('a[href^="/"]').each(function () {
+            //         $(this).attr('href', $(this).attr('href') + '?souls2thepolls');
+            //     });
+            // }
 
             var $forms = $('#forms'),
                 $intro = $('#intro'),
@@ -480,7 +531,9 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
 

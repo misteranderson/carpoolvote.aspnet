@@ -82,6 +82,17 @@ namespace CPV
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "CPVdefault",
+                    template: "{themeName}/{controller}/{action}/{lang}",
+                    defaults: new {
+                        themeName = "carpoolvote",
+                        controller = "Home",
+                        action ="Index",
+                        lang = "en-US"
+                    }
+                    );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 

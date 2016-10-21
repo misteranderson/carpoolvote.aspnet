@@ -1,6 +1,5 @@
 // dropdown.js  
 // Loads JSON data to dropdown template 
-
 var votingDropdown = (function() {
 
 	// grab data from csv
@@ -12,7 +11,7 @@ var votingDropdown = (function() {
 		}
 	}
 
-	$.getJSON('res/voting-details.json', function(data) {
+	$.getJSON('res/voting-details.json)', function(data) {
 		$("#state-select").html( $.map(data, listItem('RegCheck')).join('') );
 		$("#location-details").html( $.map(data, listItem('LocationFinder')).join('') );
 	});
