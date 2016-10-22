@@ -204,12 +204,18 @@ a.twitter-mention-button {
     visibility: hidden; /* Don't show link til it's loaded */
 }
 
-
 .nav__links {
     padding: 0;
     margin: 0;
     list-style: none;
     text-align: center;
+}
+
+.nav__languages {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: right;
 }
 
 .nav__item {
@@ -219,6 +225,13 @@ a.twitter-mention-button {
 
 .nav__support {
     border-right: 0;
+    /*border-right: solid 1px #297bbb;*/
+}
+
+.nav__language {
+    display: inline;
+    border-right: 0; 
+    /*border-right: solid 1px #297bbb;*/
 }
 
 .nav__link {
@@ -226,7 +239,6 @@ a.twitter-mention-button {
     font-size: 16px;
     text-decoration: none;
 }
-
 
 /* Intro */
 

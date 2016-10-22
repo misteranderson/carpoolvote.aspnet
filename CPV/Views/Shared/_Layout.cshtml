@@ -15,14 +15,14 @@
     String String0 = "Need voter support? Call ";
     if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
-        String0 = "Necesidad de apoyo de los votantes? Llame ";
+        String0 = "Necesidad de apoyo de los votantes? Telefonear ";
     }
 
     String StringHelpPhone = "1-866-OURVOTE";
     String StringHelpPhoneDigits = "18666878683";
     if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_SPANISH, StringComparison.OrdinalIgnoreCase))
     {
-        StringHelpPhone = "(888)VE-Y-VOTA";
+        StringHelpPhone = "(888) VE-Y-VOTA";
         StringHelpPhoneDigits = "18888398682";
     }
 
@@ -30,7 +30,7 @@
     String String10 = "Our Story";
     if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
-        String10 = "Nuestra historia";
+        String10 = "Nuestra Historia";
     }
 
     String String11 = "How it works";
@@ -45,13 +45,23 @@
         String12 = "Ayuda";
     }
 
-    //  
-    //  
-    //  
+    string SignupForNewsletter = "Sign up for our newsletter";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH, StringComparison.OrdinalIgnoreCase))
+    {
+        SignupForNewsletter = "Suscribirse a nuestro boletín de noticias";
+    }
 
-}
+    string EmailAddressHelpText = "email address";
+    if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_SPANISH, StringComparison.OrdinalIgnoreCase))
+    {
+        EmailAddressHelpText = "dirección de correo electrónico";
+    }
 
-<html lang="en-us">
+    //
+
+    }
+
+<html lang="@Model.LanguageCode">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -91,7 +101,7 @@
         _gs('GSN-777832-U');
     </script>
 
-    <environment names="Development">
+    @*<environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -100,80 +110,102 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
-
+    </environment>*@
 </head>
+
 <body>
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script>
-        // Facebook SDK
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <header class="header">
-        <p class="support-banner">@String0 <a href="tel:@StringHelpPhoneDigits">@StringHelpPhone</a></p>
-        <nav class="nav wrapper">
-            <a href="/" class="logo">
-                <img id="logo" class="logo__img" src="@Href("~/res/img/logo.jpg")" alt="Carpool Vote" width=709 height=187 />
-            </a>
-            <script>
-                (function () {
-                    if (window.location.search === '?souls2thepolls') {
-                        var logo = document.getElementById('logo');
-                        logo.setAttribute('src', 'res/img/logo-souls2thepolls.png');
-                        logo.setAttribute('width', 661);
-                        logo.setAttribute('height', 300);
-                        logo.parentNode.setAttribute('href', '/?souls2thepolls');
-                    }
-                })();
-            </script>
-            <ul id="nav-links" class="nav__links">
-                <li class="nav__item nav__story">
-                    <a href="@Url.Action("Index","Story", new { themeName = Model.ThemeName, lang = Model.LanguageCode })" class="nav__link story" id="story-link">@String10</a>
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>
+    // Facebook SDK
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<header class="header">
+    <p class="support-banner">@String0 <a href="tel:@StringHelpPhoneDigits">@StringHelpPhone</a></p>
+    <nav class="nav wrapper">
+        @{
+            string logoUrl = "~/res/img/logo.jpg";
+            int logoHeight = 187;
+            int logoWidth = 709;
+            string logoAlt = "Carpool Vote";
+
+            if (String.Equals(Model.ThemeName, "souls2thepolls", StringComparison.OrdinalIgnoreCase))
+            {
+                logoUrl = "~/res/img/logo-souls2thepolls.png";
+                logoHeight = 300;
+                logoWidth = 661;
+                logoAlt = "Souls2ThePolls - CarPool Vote";
+            }
+
+        }
+        <a href="@Url.Action("Index", "Home", new {themeName = Model.ThemeName, lang = Model.LanguageCode})" class="logo">
+            <img id="logo" class="logo__img" src="@Href(logoUrl)" alt="@logoAlt" width="@logoWidth" height="@logoHeight"/>
+        </a>
+        <br/>
+        @*<script>
+            (function() {
+                        if (window.location.search === '?souls2thepolls') {
+                            var logo = document.getElementById('logo');
+                            logo.setAttribute('src', 'res/img/logo-souls2thepolls.png');
+                            logo.setAttribute('width', 661);
+                            logo.setAttribute('height', 300);
+                            logo.parentNode.setAttribute('href', '/?souls2thepolls');
+                        }
+                    })();
+        </script>*@
+
+        <ul id="nav-links" class="nav__links">
+            <li class="nav__item nav__story">
+                <a href="@Url.Action("Index", "Story", new {themeName = Model.ThemeName, lang = Model.LanguageCode})" class="nav__link story" id="story-link">@String10</a>
+            </li>
+            <li class="nav__item nav__how">
+                <a href="@Url.Action("Index", "Home", new {themeName = Model.ThemeName, lang = Model.LanguageCode})#howtoclaim" class="nav__link">@String11</a>
+            </li>
+            <li class="nav__item nav__support">
+                <a href="@Url.Action("Index", "Home", new {themeName = Model.ThemeName, lang = Model.LanguageCode})#support" class="nav__link">@String12</a>
+            </li>
+        </ul>
+        <br /> 
+        <ul id="nav-lang" class="nav__languages">
+            @if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_ENGLISH, StringComparison.OrdinalIgnoreCase))
+            {
+                <li class="nav__item nav__language">
+                    @Html.ActionLink(CPV.CPVConstants.LANGUAGE_SPANISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_SPANISH }, new { @class = "nav__link" })
+                    @*<a href="@Url.Action("Index", )" class="nav__link"></a>*@
                 </li>
-                <li class="nav__item nav__how">
-                    <a href="@Url.Action("Index","Home", new { themeName = Model.ThemeName, lang = Model.LanguageCode })#howtoclaim" class="nav__link">@String11</a>
+            }
+            else
+            {
+                <li class="nav__item nav__language">
+                    @Html.ActionLink(CPV.CPVConstants.LANGUAGE_ENGLISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH }, new { @class = "nav__link" })
+                    @*<a href="@Url.Action("Index", new {themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH})" class="nav__link">@CPV.CPVConstants.LANGUAGE_ENGLISH_NAME</a>*@
                 </li>
-                <li class="nav__item nav__support">
-                    <a href="@Url.Action("Index","Home", new { themeName = Model.ThemeName, lang = Model.LanguageCode })#support" class="nav__link">@String12</a>
-                </li>
-                @if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_ENGLISH,StringComparison.OrdinalIgnoreCase))
-                {
-                    <li class="nav__item nav__language">
-                        @Html.ActionLink(CPV.CPVConstants.LANGUAGE_SPANISH_NAME,"Index",null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_SPANISH }, new { @class = "nav__link" })
-                        @*<a href="@Url.Action("Index", )" class="nav__link"></a>*@
-                    </li>
-                }
-                else
-                {
-                    <li class="nav__item nav__language">
-                        @Html.ActionLink(CPV.CPVConstants.LANGUAGE_ENGLISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH }, new { @class = "nav__link" })
-                        @*<a href="@Url.Action("Index", new {themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH})" class="nav__link">@CPV.CPVConstants.LANGUAGE_ENGLISH_NAME</a>*@
-                    </li>
-                }
-            </ul>
-            <ul class="social">
-                <li role="presentation" class="social__twitter">
-                    <a href="https://twitter.com/intent/tweet" class="twitter-mention-button" data-text="Need a ride to vote on election day? CarpoolVote.com can help! #election" data-related="" data-show-count="false">Tweet to help others find out about this!</a>
-                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </li>
-                <li role="presentation" class="social__facebook">
-                    <div class="fb-share-button" data-href="http://carpoolvote.com?v=1" data-layout="button"></div>
-                </li>
-                <li role="presentation" class="social__youtube">
-                    <script src="https://apis.google.com/js/platform.js"></script>
-                    <div class="g-ytsubscribe" data-channelid="UCY1aS3TMDGxVbckA7Va0QFA" data-layout="default" data-count="hidden"></div>
-                </li>
-            </ul>
-        </nav>
-    </header>
+            }
+        </ul>
+
+        <ul class="social">
+            <li role="presentation" class="social__twitter">
+                <a href="https://twitter.com/intent/tweet" class="twitter-mention-button" data-text="Need a ride to vote on election day? CarpoolVote.com can help! #election" data-related="" data-show-count="false">Tweet to help others find out about this!</a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </li>
+            <li role="presentation" class="social__facebook">
+                <div class="fb-share-button" data-href="http://carpoolvote.com?v=1" data-layout="button"></div>
+            </li>
+            <li role="presentation" class="social__youtube">
+                <script src="https://apis.google.com/js/platform.js"></script>
+                <div class="g-ytsubscribe" data-channelid="UCY1aS3TMDGxVbckA7Va0QFA" data-layout="default" data-count="hidden"></div>
+            </li>
+        </ul>
+    </nav>
+</header>
 
 @*
     <div class="content">
@@ -181,20 +213,19 @@
         </div>
 *@
 
-<div class="content">
-
-    @*<div id="LanguageNote">
-<pre>
-    Currently Viewing Site: 
-    Language Name:  @ViewData["CurrentLanguageName"]  [@Model.LanguageName]
-    Language     :  @ViewData["Language"]             [@Model.Language]
-    Theme        :  @ViewData["ThemeName"]            [@Model.ThemeName]
-</pre>
-        </div>*@
-
-        @RenderBody()
-
+@*
+    <div id="LanguageNote">
+    <pre>
+        Currently Viewing Site:
+        Language Name:  @ViewData["CurrentLanguageName"]  [@Model.LanguageName]
+        Language     :  @ViewData["Language"]             [@Model.Language]
+        Theme        :  @ViewData["ThemeName"]            [@Model.ThemeName]
+    </pre>
     </div>
+*@
+
+
+<div class="content">@RenderBody()</div>
 
     <footer class="footer">
         <div class="wrapper">
@@ -202,8 +233,9 @@
                 Contact us: <a class="footer__link" href="mailto:together@carpoolvote.com">together@carpoolvote.com</a>
             </p>
             <form class="newsletter">
-                <label class="newsletter__label" for="signup">Sign up for our newsletter</label>
-                <input class="newsletter__input" type="text" placeholder="email address">
+                <label class="newsletter__label" for="signup">@SignupForNewsletter</label>
+                <input class="newsletter__input" type="text" placeholder="@EmailAddressHelpText">
+                <input name="languageCode" type="hidden" value="@Model.LanguageCode">
                 <input class="newsletter__submit" value="Join" type="submit">
             </form>
         </div>
@@ -242,7 +274,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/salvattore/1.0.9/salvattore.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-    <script type="text/javascript" src="res/jquery-dateFormat.min.js"></script>
+    <script type="text/javascript" src="@Href("~/res/jquery-dateFormat.min.js")"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="@Href("~/res/jquery.datetimepicker.full.min.js")"></script>
@@ -251,6 +283,7 @@
     <script type="text/javascript" src="@Href("~/dropdown.js")"></script>
     <script>
         $(document).ready(function () {
+            // ECA: Since we removed the use of a query string, for a path instead, we don't need to do this.
             // Rewrite all hyperlinks to use a single query string.
             // if (window.location.search === '?souls2thepolls') {
             //     $('a[href^="/"]').each(function () {
@@ -266,19 +299,19 @@
                 $('html, body').animate({
                     scrollTop: offset
                 }, speed || 500);
-            }
+            };
 
             function showForm(target) {
                 $(target).slideDown(200).siblings().slideUp(200);
                 $intro.slideUp(200);
                 scrollTo(0);
-            }
+            };
 
             function hideForms() {
                 $forms.children().slideUp(200);
                 $intro.slideDown(200);
                 scrollTo(0);
-            }
+            };
 
             function toggleFormsOnHashChange() {
                 if (document.location.hash.length) {
@@ -515,7 +548,8 @@
         }
 
     </script>
-    <environment names="Development">
+
+    @*<environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -530,7 +564,7 @@
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    </environment>*@
 
     @RenderSection("scripts", required: false)
 
