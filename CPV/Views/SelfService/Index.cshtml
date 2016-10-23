@@ -1,0 +1,77 @@
+﻿@using CPV
+@model CPV.CPVBasicViewModel
+@{
+    // =============================================================
+    // English Default Strings:
+    string String100 = "OUR STORY";
+    string String101 = @"Carpool Vote connects volunteer drivers with anybody who needs a ride to claim their vote.";
+    string String102 = @"Many of our riders need a driver after losing full protection of the Voting Rights Act in 2013, as state governments no longer need permission to change election rules.";
+    string String103 = @"The 2016 US Presidential election will be the first since this change has happened.";
+    string String104 = @"Under the new rules, voters in several states face new barriers to getting to the polls.";
+    string String105 = @"Some of the obstacles that Carpool Vote aims to reduce include:";
+    string String106 = @"Polling stations face closure in lower - income communities of color.";
+    string String107 = @"Would-be voters have to travel out of town to get a photo ID to register.";
+    string String108 = @"The periods available to register and vote become shorter.";
+    string String109 = @"Requesting an absentee ballot or voting by mail can be difficult in many states.";
+    string String110 = @"These rules -along with others introduced since the change- affect everybody but especially people of color, people with disabilities, young people, elderly people, and women.";
+    string String111 = @"Find out more about voter suppression";
+    string Url111 = @"https://medium.com/@RightToVote";
+    string String112 = "These rules in swing states could sway 84 Electoral College votes and control of the Senate. ";
+    string String113 = "It looks like the upcoming Presidential Election will be a close fight, so our mission is to help make sure that no vote goes uncounted.";
+    string String114 = "While we’re at it, we love that we can help people of all ages get excited about the political process, and introduce people from all walks of life who may not have had the chance to meet otherwise.";
+    string String115 = "We hope that you love this, too!";
+    //string String116 = "";
+    string String117 = "Carpool Vote news stories";
+    string Url117 = @"https://medium.com/@carpoolvote";
+
+
+    if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_SPANISH, StringComparison.OrdinalIgnoreCase))
+    {
+        String100 = "Spanish Translation Needed - String100 ";
+        String101 = "Spanish Translation Needed - String101 ";
+        String102 = "Spanish Translation Needed - String102 ";
+        String103 = "Spanish Translation Needed - String103 ";
+        String104 = "Spanish Translation Needed - String104 ";
+        String105 = "Spanish Translation Needed - String105 ";
+        String106 = "Spanish Translation Needed - String106 ";
+        String107 = "Spanish Translation Needed - String107 ";
+        String108 = "Spanish Translation Needed - String108 ";
+        String109 = "Spanish Translation Needed - String109 ";
+        String110 = "Spanish Translation Needed - String110 ";
+        String111 = "Spanish Translation Needed - String111 ";
+        Url111 = @"https://medium.com/@RightToVote";
+        String112 = "Spanish Translation Needed - String112";
+        String113 = "Spanish Translation Needed - String113";
+        String114 = "Spanish Translation Needed - String114";
+        String115 = "Spanish Translation Needed - String115";
+        //String116 = "";
+        String117 = "Noticias anuncio del voto";
+        Url117 = @"https://medium.com/@carpoolvote";
+    }
+}
+
+    <main class="content">
+        <div class="wrapper single-column offset-top">
+            <div class="bannerbox">
+                <h1 class="bannerbox__title">@String100</h1>
+                <div class="bannerbox__content">
+                    <p>@String101</p>
+                    <p>@String102 @String103</p>
+                    <p>@String104 @String105</p>
+                    <ul>
+                        <li>@String106</li>
+                        <li>@String107</li>
+                        <li>@String108</li>
+                        <li>@String109</li>
+                    </ul>
+                    <p>@String110</p>
+                    <p><a href="@Url111">@String111</a></p>
+                    <p>@String112 @String113</p>
+                    <p>@String114 </p>
+                    <p>@String115</p>
+                    <p><a href="@Url117">@String117</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
