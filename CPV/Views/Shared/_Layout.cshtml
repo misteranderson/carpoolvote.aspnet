@@ -33,6 +33,12 @@
         String10 = "Nuestra Historia";
     }
 
+    String ContactUs = "Contact us";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    {
+        ContactUs = "En contacto con nosotros";
+    }
+	
     String String11 = "How it works";
     if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
@@ -225,12 +231,14 @@
 *@
 
 
-<div class="content">@RenderBody()</div>
+<div class="content">
+	@RenderBody()
+</div>
 
     <footer class="footer">
         <div class="wrapper">
             <p class="footer__text">
-                Contact us: <a class="footer__link" href="mailto:together@carpoolvote.com">together@carpoolvote.com</a>
+                @ContactUs: <a class="footer__link" href="mailto:together@carpoolvote.com">together@carpoolvote.com</a>
             </p>
             <form class="newsletter">
                 <label class="newsletter__label" for="signup">@SignupForNewsletter</label>
@@ -281,6 +289,15 @@
     <script type="text/javascript" src="@Href("~/res/nouislider.min.js")"></script>
     <!-- dropdown for issue #37 - voting registrations per state -->
     <script type="text/javascript" src="@Href("~/dropdown.js")"></script>
+	
+@*
+	TODO: Many of these scripts can be moved outside the Layout Page and into the script block for the relevant view. 
+	(for example, rider/driver page needs the form scripts, the others do not)
+	They would then be rendered by the optional script sections: 
+		RenderSection("scripts", required: false)
+
+*@	
+	
     <script>
         $(document).ready(function () {
             // ECA: Since we removed the use of a query string, for a path instead, we don't need to do this.
