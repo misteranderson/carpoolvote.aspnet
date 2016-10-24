@@ -1,0 +1,38 @@
+﻿@using CPV
+@model CPV.CPVBasicViewModel
+@{
+    // Model.Language = Model.Language ?? "en_US";
+    // ViewData["CurrentLanguageName"] = Model.LanguageName ?? "English";
+    // ViewData["ThemeName"] = Model.ThemeName ?? "carpoolvote";
+    // 
+
+    string HeaderText = "Thank you!";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.InvariantCultureIgnoreCase))
+    {
+        HeaderText = "¡Gracias!";
+    }
+
+    string CallToActionText = "Let's do all we can to get the vote out this year.";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.InvariantCultureIgnoreCase))
+    {
+        CallToActionText = "Vamos a hacer todo lo posible para conseguir el voto a cabo este año.";
+    }
+
+    string PleaseShareText = "Please share this site with your friends and family.";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.InvariantCultureIgnoreCase))
+    {
+        PleaseShareText = "Por favor, comparte este sitio con sus amigos y familiares.";
+    }
+}
+
+<div class="jumbotron" id="jumboMain">
+    <div id="pnlIntro">
+        <h1 style="text-transform: uppercase;">@HeaderText</h1>
+        <p class="lead">
+            @CallToActionText
+        </p>
+        <p>
+            @PleaseShareText
+        </p>
+    </div> <!-- intro -->
+</div> <!-- jumbo -->
