@@ -33,6 +33,12 @@
         String10 = "Nuestra Historia";
     }
 
+    String ContactUs = "Contact us";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    {
+        ContactUs = "En contacto con nosotros";
+    }
+	
     String String11 = "How it works";
     if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
@@ -57,6 +63,12 @@
         EmailAddressHelpText = "dirección de correo electrónico";
     }
 
+    string TermsAndConditionsNameString = "Terms and Conditions";
+    if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_SPANISH, StringComparison.OrdinalIgnoreCase))
+    {
+        TermsAndConditionsNameString = "Términos y Condiciones";
+    }
+	
     //
 
     }
@@ -79,7 +91,10 @@
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link type="text/css" rel="stylesheet" href="@Href("~/res/jquery.datetimepicker.min.css")">
     <link type="text/css" rel="stylesheet" href="@Href("~/res/nouislider.min.css")">
-    <link type="text/css" rel="stylesheet" href="@Href("~/res/styles.css")">
+    <link type="text/css" rel="stylesheet" href="@Href("~/css/main.css")">
+	@* <link type="text/css" rel="stylesheet" href="@Href("~/css/site.css")"> *@
+	<link type="text/css" rel="stylesheet" href="@Href("~/css/time-polyfill.css")">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -128,6 +143,34 @@
     }(document, 'script', 'facebook-jssdk'));
 </script>
 
+<div class="utility-bar">
+	<div class="wrap">
+		<div class="utility-bar-right">	
+	
+@*		<ul id="nav-lang" class="nav__languages">  *@
+            @if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_ENGLISH, StringComparison.OrdinalIgnoreCase))
+            {
+@*                <li class="nav__item nav__language"> *@
+				<text>
+                    @Html.ActionLink(CPV.CPVConstants.LANGUAGE_SPANISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_SPANISH }, new { @class = "nav__link", hreflang=CPV.CPVConstants.LANGUAGE_SPANISH, rel="alternate" })
+				</text>
+@*                </li>*@
+            }
+            else
+            {
+@*                <li class="nav__item nav__language"> *@
+				<text>
+                    @Html.ActionLink(CPV.CPVConstants.LANGUAGE_ENGLISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH }, new { @class = "nav__link" })
+                    @*<a href="@Url.Action("Index", new {themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH})" class="nav__link">@CPV.CPVConstants.LANGUAGE_ENGLISH_NAME</a>*@
+				</text>
+@*                </li>*@
+            }
+@*        </ul>*@
+		</div>
+	</div>
+</div>
+
+
 <header class="header">
     <p class="support-banner">@String0 <a href="tel:@StringHelpPhoneDigits">@StringHelpPhone</a></p>
     <nav class="nav wrapper">
@@ -173,23 +216,10 @@
                 <a href="@Url.Action("Index", "Home", new {themeName = Model.ThemeName, lang = Model.LanguageCode})#support" class="nav__link">@String12</a>
             </li>
         </ul>
-        <br /> 
-        <ul id="nav-lang" class="nav__languages">
-            @if (String.Equals(Model.LanguageCode, CPV.CPVConstants.LANGUAGE_ENGLISH, StringComparison.OrdinalIgnoreCase))
-            {
-                <li class="nav__item nav__language">
-                    @Html.ActionLink(CPV.CPVConstants.LANGUAGE_SPANISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_SPANISH }, new { @class = "nav__link" })
-                    @*<a href="@Url.Action("Index", )" class="nav__link"></a>*@
-                </li>
-            }
-            else
-            {
-                <li class="nav__item nav__language">
-                    @Html.ActionLink(CPV.CPVConstants.LANGUAGE_ENGLISH_NAME, "Index", null, new { themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH }, new { @class = "nav__link" })
-                    @*<a href="@Url.Action("Index", new {themeName = Model.ThemeName, lang = CPV.CPVConstants.LANGUAGE_ENGLISH})" class="nav__link">@CPV.CPVConstants.LANGUAGE_ENGLISH_NAME</a>*@
-                </li>
-            }
-        </ul>
+
+@*
+*@
+        
 
         <ul class="social">
             <li role="presentation" class="social__twitter">
@@ -225,12 +255,14 @@
 *@
 
 
-<div class="content">@RenderBody()</div>
+<div class="content">
+	@RenderBody()
+</div>
 
     <footer class="footer">
         <div class="wrapper">
             <p class="footer__text">
-                Contact us: <a class="footer__link" href="mailto:together@carpoolvote.com">together@carpoolvote.com</a>
+                @ContactUs: <a class="footer__link" href="mailto:together@carpoolvote.com">together@carpoolvote.com</a>
             </p>
             <form class="newsletter">
                 <label class="newsletter__label" for="signup">@SignupForNewsletter</label>
@@ -238,6 +270,9 @@
                 <input name="languageCode" type="hidden" value="@Model.LanguageCode">
                 <input class="newsletter__submit" value="Join" type="submit">
             </form>
+        </div>
+        <div class="wrapper">
+			@Html.ActionLink(TermsAndConditionsNameString,"Index", "TermsAndConditions", new {themeName = Model.ThemeName, lang = Model.LanguageCode})
         </div>
     </footer>
 
@@ -281,6 +316,15 @@
     <script type="text/javascript" src="@Href("~/res/nouislider.min.js")"></script>
     <!-- dropdown for issue #37 - voting registrations per state -->
     <script type="text/javascript" src="@Href("~/dropdown.js")"></script>
+	
+@*
+	TODO: Many of these scripts can be moved outside the Layout Page and into the script block for the relevant view. 
+	(for example, rider/driver page needs the form scripts, the others do not)
+	They would then be rendered by the optional script sections: 
+		RenderSection("scripts", required: false)
+
+*@	
+	
     <script>
         $(document).ready(function () {
             // ECA: Since we removed the use of a query string, for a path instead, we don't need to do this.

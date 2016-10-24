@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPV.Controllers
 {
-    public class SelfServiceController : CPVController
+    public class TermsAndConditionsController : CPVController
     {
         public override IActionResult Index(string themeName, string lang)
         {

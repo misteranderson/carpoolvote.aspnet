@@ -23,5 +23,9 @@ namespace CPV
         {
             get; set;
         }
+        public string UUID
+        {
+            get; set;
+        }
     }
 }
