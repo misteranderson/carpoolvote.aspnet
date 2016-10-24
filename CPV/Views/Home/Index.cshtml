@@ -3,10 +3,12 @@
 @{
     // =============================================================
     ViewData["ElectionDay"] = new DateTime(CPV.CPVConstants.ELECTION_DAY_2016_YR, CPV.CPVConstants.ELECTION_DAY_2016_MM, CPV.CPVConstants.ELECTION_DAY_2016_DD);
-    ViewData["APIVersion"] = "v1.1"; // dev ,v2.0
+    // ViewData["APIVersion"] = "@APIVersion"; // 
     // =============================================================
+	String APIVersion = "live";  // Was v1.1 ,v2.0
 
-
+	// TODO: if in the test deployment slot / environment, then use "test" instead...
+	
     // =============================================================
     String StringRiders = "Riders";
     String StringDrivers = "Drivers";
@@ -78,15 +80,52 @@
     if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
     {
         String9 = "Puedo ofrecer un paseo";
+	
     }
+	
+	String CountdownClockHeader = "2016 Election Countdown Clock";
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    {
+		CountdownClockHeader = "Elección 2016 Reloj de Cuenta Atrás";
+	}
+
+	
+	String WayToHelp1  = "Help build links with organizations and communities";
+	String WayToHelp2  = "Organize my own community";
+	String WayToHelp3  = "Set up collaboration with my organization";
+	String WayToHelp4  = "Help get the word out";
+	String WayToHelp5  = "Do research";
+	String WayToHelp6  = "Offer legal expertise";
+	String WayToHelp7  = "Contribute my tech wizardry";
+	String WayToHelp8  = "Help the project raise money";
+	String WayToHelp9  = "";
+	String WayToHelp10 = "";
+		
+    if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+    {
+		WayToHelp1  = "Ayudar a construir vínculos con organizaciones y comunidades";
+		WayToHelp2  = "Organizar mi propia comunidad";
+		WayToHelp3  = "Establecer colaboración con mi organización";
+		WayToHelp4  = "Ayuda a difundir la palabra";
+		WayToHelp5  = "Hacer investigación";
+		WayToHelp6  = "Ofrecer asesoramiento legal";
+		WayToHelp7  = "Contribuir con mi magia tecnología";
+		WayToHelp8  = "Ayudar al aumento de dinero del proyecto";
+		WayToHelp9  = "";
+		WayToHelp10 = "";
+    }
+	// ========== END OF TRANSLATIONS ==========================
+	
 }
 
 <div id="intro" class="intro wrapper">
     <script>
+		// Force restyling if a different theme...
         if ('@Model.ThemeName' === 'souls2thepolls') {
                     document.getElementById('intro').style.backgroundImage = 'url("@Href("~/res/forest.jpeg")")';
         }
     </script>
+
     <div class="intro__banner">
         <h1 class="intro__title">@String1</h1>
         <p class="intro__lead">@String2</p>
@@ -119,19 +158,52 @@
             </p>
         </li>
     </ul>
-</div>
+</div> <!-- intro -->
+
+
 <div id="forms" class="forms wrapper">
-    <form id="need-ride" name="needRide" action="https://api.carpoolvote.com/v1.1/rider" method="post" class="ride-form" data-toggle="validator" role="form">
+    <form id="need-ride" name="needRide" action="https://api.carpoolvote.com/@APIVersion/rider" method="post" class="ride-form" data-toggle="validator" role="form">
         <input type="hidden" name="_redirect" class="redirect" value="http://carpoolvote.com" />
+
+		@{
+			String PotentialRiderTitle = "I need a ride";
+			if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+			{
+				PotentialRiderTitle = "Necesito que me lleven";
+			}
+	
+			String 	YourTripTitle = "Your trip";
+			if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+			{
+				YourTripTitle = "Tu viaje";
+			}
+			
+			String YourAvailableDates = "Date(s) available";
+			if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+			{
+				YourAvailableDates = "Fechas disponibles";
+			}
+			
+			String WhenRiderAvailable = "On what date(s) would you be a available for the ride?  Please pick all the dates that could work for you: This will make it easier for us to match you with a driver.";
+							
+			if (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase))
+			{
+				WhenRiderAvailable = "En qué fechas le ser una disponible para el viaje? Favor de recoger todas las fechas que podrían funcionar para usted: Esto hará que sea más fácil para que podamos hacerlo coincidir con un conductor.";
+			}
+		}
+		
         <div class="bannerbox">
-            <h3 class="bannerbox__title">I need a ride</h3>
+            <h3 class="bannerbox__title">@PotentialRiderTitle</h3>
             <div class="bannerbox__content">
-                <a class="close-form button--cancel" href="#intro">&times;</a>
+
+				<a class="close-form button--cancel" href="#intro">&times;</a>
                 <fieldset class="date-time-pickers">
-                    <legend>Your trip</legend>
+                    <legend>@YourTripTitle</legend>
                     <div class="form-group date-container">
-                        <label for="rider-date">Date(s) available</label>
-                        <p>On what date(s) would you be a available for the ride? Please pick all the dates that could work for you: This will make it easier for us to match you with a driver.</p>
+                        <label for="rider-date">@YourAvailableDates</label>
+                        <p>
+						@WhenRiderAvailable
+						</p>
                         <input type="text" class="riderdatepicker datepicker" id="rider-date" name="RiderDate" required>
                     </div>
                     <div class="form-group">
@@ -150,6 +222,7 @@
                         <div class="help-block with-errors"></div>
                     </div>
                 </fieldset>
+				
                 <fieldset>
                     <legend>Your location details</legend>
                     <div class="form-column">
@@ -173,6 +246,8 @@
                         </div>
                     </div>
                 </fieldset>
+				
+				
                 <fieldset>
                     <legend>Vehicle requirements</legend>
                     <p>Please let us know how how many people will need to travel together in the <b>same car</b>.</p>
@@ -269,7 +344,9 @@
             </div>
         </div>
     </form>
-    <form id="offer-ride" name="offerRide" action="https://api.carpoolvote.com/v1.1/driver" method="post" class="ride-form" data-toggle="validator" role="form">
+	
+	
+    <form id="offer-ride" name="offerRide" action="https://api.carpoolvote.com/@APIVersion/driver" method="post" class="ride-form" data-toggle="validator" role="form">
         <input type="hidden" class="redirect" name="_redirect" value="http://carpoolvote.com" />
         <div class="bannerbox">
             <h3 class="bannerbox__title">I can offer a ride</h3>
@@ -389,86 +466,238 @@
             </div>
         </div>
     </form>
-</div>
+	
+</div> <!-- forms wrapper -->
+
+@{
+	Boolean ShowSpanish = false;
+	ShowSpanish = (String.Equals(Model.LanguageCode,CPV.CPVConstants.LANGUAGE_SPANISH,StringComparison.OrdinalIgnoreCase));
+
+	String InManyStates 	= "In many states, new voting rules have made it more difficult for people to get to polling stations. ";
+	String TheseRulesAffect = "These rules particularly affect People of Color, People with Disabilities, Young People, Elderly People, and Women.";
+	String CPVIsATool 		= "Carpool Vote is a tool to fight back against an unfair political system in the 2016 election.";
+	String WhatWeDo 		= "We connect volunteer drivers with anybody who needs a ride - to the polls or voter I.D. office.";
+	String ReadMore 		= "Read more";
+
+	if (ShowSpanish){
+		InManyStates 		= "En muchos estados, las nuevas normas de votación han hecho que sea más difícil para las personas que llegan a los centros de votación.";
+		TheseRulesAffect 	= "Estas normas afectan en particular a personas de color, personas con discapacidades, los jóvenes, los ancianos y mujeres.";
+		CPVIsATool 		    = "Carpool Vote es una herramienta para luchar contra un sistema político injusto en la elección de 2016.";
+		WhatWeDo 			= "Ponemos en contacto a conductores voluntarios con cualquier persona que necesita un paseo - a las urnas o votantes de diámetro interno oficina.";
+		ReadMore 			= "Lee mas";
+	}
+	
+	// Rock the Vote Has a separate site for spanish speakers.. Let's use those other URLs..
+	String  RockTheVoteName ="Rock the Vote";
+	if (ShowSpanish){
+		RockTheVoteName ="Rock the Vote";
+	}
+			
+	String 	HasSomeTools = "has several online tools that simplify and demystify voter registration and elections.";
+	if (ShowSpanish){
+		HasSomeTools = "tiene varias herramientas en línea que simplifican y desmitifican el registro de votantes y las elecciones.";
+	}
+
+	String 	FollowRTVLinks = "Follow the links below for more on how to claim your vote!";
+	if (ShowSpanish){
+		FollowRTVLinks = "Siga los enlaces a continuación para más información sobre cómo reclamar su voto!";
+	}
+			
+	String 	RTVURL0 = "https://www.rockthevote.com/?source=voteamerica";
+	if (ShowSpanish)	{ 
+		RTVURL0 = "http://www.rockthevote.com/en-espanol/?source=voteamerica";
+	}
+	String 	RTVURLDesc1 = "Register to vote!";
+	if (ShowSpanish){
+		RTVURLDesc1 = "Registrarse para votar!";
+	}
+	String 	RTVURL1 = "https://www.rockthevote.com/register-to-vote/?source=voteamerica";
+	if (ShowSpanish) {
+		RTVURL1 = "https://www.rockthevote.com/register-to-vote/index-es.html?source=voteamerica";
+	}
+	String 	RTVURLDesc2 = "Voter requirements";
+	if (ShowSpanish)		{
+		RTVURLDesc2	= "Requisitos de votantes";
+	}
+
+	String 	RTVURL2 = "https://www.rockthevote.com/get-informed/elections/voter-id-requirements/state/";		   
+	if (ShowSpanish)		{
+		RTVURL2 = "https://www.rockthevote.com/get-informed/elections/voter-id-requirements/state/"; // No Spanish language Version of URL?	   
+	}
+
+	String 	RTVURLDesc3 = "Find where to vote";
+	if (ShowSpanish) {
+		RTVURLDesc3	= "Encuentra dónde votar";
+	}
+
+	String 	RTVURL3 = "https://www.rockthevote.com/get-informed/elections/find-your-polling-place/";		   
+	if (ShowSpanish) {
+		RTVURL3 = "https://www.rockthevote.com/get-informed/elections/find-your-polling-place/"; // No Spanish language Version of URL?
+	}
+
+	String 	RTVURLDesc4 = "About elections";
+	if (ShowSpanish) {
+		RTVURLDesc4	= "Sobre las elecciones";
+	}
+
+	String 	RTVURL4 = "https://www.rockthevote.com/get-informed/elections/";		   
+	if (ShowSpanish) {
+		RTVURL4 = "https://www.rockthevote.com/get-informed/elections/";		   // No Spanish language Version of URL?
+	}
+
+	
+	String 	AmIRegistered = "Am I registered?";
+	if (ShowSpanish)		{
+		AmIRegistered = "¿Estoy registrado?";
+	}
+	
+	String 	DetermineRegistrationStep1 = "Select your state. Check if you're registered to vote on the November 8 presidential election";
+	if (ShowSpanish){
+		DetermineRegistrationStep1 = "Seleccione su estado. Compruebe si está registrado para votar en las elecciones de noviembre 8";
+	}
+
+	String 	LoadingMessage = "Loading";
+	if (ShowSpanish){
+		LoadingMessage = "Cargando";
+	}
+			
+	String 	ReportVotingProbs = "Report voting problems, and get voting relating info for your state.";			
+	if (ShowSpanish){
+		ReportVotingProbs = "Informar sobre problemas con derecho a voto, y obtener información relacionada votación para su estado.";			
+	}
+
+	String 	WhatDoesEPCDo	 = "works around the clock to advance and defend your right to vote.";
+	if (ShowSpanish){
+		WhatDoesEPCDo	 = "trabaja todo el día para avanzar y defender su derecho al voto.";
+	}
+
+	String ShareAndHelp = "Please use the social media links to share this site, but also let us know if you can help out with any of this below ";
+	if (ShowSpanish) {
+		ShareAndHelp = "Por favor, utilice los enlaces de medios sociales para compartir este sitio, sino que también nos dejó saber si usted puede ayudar con cualquiera de esto más adelante";
+	}
+	
+	String CanYouHelp 	= "Absolutely!";
+	if (ShowSpanish)		{
+		CanYouHelp 	= "¡Absolutamente!";
+	}
+	
+	
+	String FF_Email = "Email";
+	if (ShowSpanish) {
+		FF_Email = "Email";
+	}
+	String FF_Email_Sample = "Email";
+	if (ShowSpanish) 
+	{
+		FF_Email_Sample = "Email";
+	}
+	
+	String FF_Name = "Name";
+ 	if (ShowSpanish) {
+		FF_Name = "Nombre";
+	}
+
+	String FF_Name_Sample = "Your name";
+	if (ShowSpanish) {
+		FF_Name_Sample = "Tu nombre";
+	}
+	
+	String SubmitButtonText = "Submit";
+	if (ShowSpanish) {
+		SubmitButtonText = "Enviar";
+	}
+	
+	
+	String ICan = "I can";
+	if (ShowSpanish) {
+		ICan = "Puedo";
+	}
+	
+	
+}
+
 <div class="about wrapper clearfix">
     <div id="grid" class="about__padding" data-columns>
+	
         <div class="bannerbox" id="story">
             <h3 class="bannerbox__title">@HeaderOurStory</h3>
             <div class="bannerbox__content">
-                <p>In many states, new voting rules have made it more difficult for people to get to polling stations. These rules particularly affect People of Color, People with Disabilities, Young People, Elderly People, and Women.Carpool Vote is a tool to fight back against an unfair political system in the 2016 election.</p>
-                <p>We connect volunteer drivers with anybody who needs a ride - to the polls or voter I.D. office.</p>
-                <p> <a href="@Url.Action("Index","Story", new { themeName = Model.ThemeName, lang = Model.LanguageCode })" class="story" id="story-button"> Read more </a> </p>
+                <p>
+				@InManyStates 	
+				@TheseRulesAffect 
+				@CPVIsATool 		
+				</p>
+                <p>@WhatWeDo</p>
+                <p> <a href="@Url.Action("Index","Story", new { themeName = Model.ThemeName, lang = Model.LanguageCode })" class="story" id="story-button"> @ReadMore </a> </p>
             </div>
         </div>
+		
         <div class="bannerbox" id="howtoclaim">
             <h3 class="bannerbox__title">@HeaderHowToClaim</h3>
             <div class="bannerbox__content">
-                <h4>Am I registered?</h4>
-                <p>Select your state check if you're registered to vote on the November 8 presidential election</p>
+                <h4>@AmIRegistered</h4>
+                <p>@DetermineRegistrationStep1</p>
                 <ul id="state-select" class="state-dropdown drop-a">
-                    <li>Loading&hellip;</li>
+                    <li>@LoadingMessage &hellip;</li>
                 </ul>
                 <h4>Rock the Vote</h4>
-                <a href="https://www.rockthevote.com/?source=voteamerica" target="_rtv"><img class="align-right" src="~/res/img/rock.png" /></a>
+                <a href="@RTVURL0" target="_rtv"><img class="align-right" src="~/res/img/rock.png" /></a>
                 <p>
-                    <a href="https://www.rockthevote.com/?source=voteamerica" target="_rtv">Rock the Vote</a> has several online tools that simplify and demystify voter registration and elections. Follow the links below for more on how to claim your vote!
+                    <a href="@RTVURL0" target="_rtv">@RockTheVoteName</a> @HasSomeTools @FollowRTVLinks
                     <ul>
-                        <li><a href="https://www.rockthevote.com/register-to-vote/?source=voteamerica" target="_rtv">Register to vote!</a></li>
-                        <li><a href="https://www.rockthevote.com/get-informed/elections/voter-id-requirements/state/" target="_rtv">Voter requirements</a></li>
-                        <li><a href="https://www.rockthevote.com/get-informed/elections/find-your-polling-place/" target="_rtv">Find where to vote</a></li>
-                        <li><a href="https://www.rockthevote.com/get-informed/elections/" target="_rtv">About elections</a></li>
+                        <li><a href="@RTVURL1" target="_rtv">@RTVURLDesc1</a></li>
+                        <li><a href="@RTVURL2" target="_rtv">@RTVURLDesc2</a></li>
+                        <li><a href="@RTVURL3" target="_rtv">@RTVURLDesc3</a></li>
+                        <li><a href="@RTVURL4" target="_rtv">@RTVURLDesc4</a></li>
                     </ul>
             </div>
         </div>
         <div class="bannerbox" id="support">
             <h3 class="bannerbox__title">@HeaderHowHelp</h3>
             <div class="bannerbox__content">
-                <p>Absolutely!</p>
-                <p>Please use the social media links to share this site, but also let us know if you can help out with any of this below </p>
-                <!--
-                    https://api.cloudstitch.com/carpool/carpoolvote/datasources/sheet
-                -->
-                <form name="offerHelp" action="https://api.carpoolvote.com/v1.1/helper" method="post" data-toggle="validator" role="form">
+                <p>@CanYouHelp</p>
+                <p>@ShareAndHelp</p>
+                <form name="offerHelp" action="https://api.carpoolvote.com/@APIVersion/helper" method="post" data-toggle="validator" role="form">
                     <input type="hidden" name="_redirect" class="redirect" value="http://carpoolvote.com" />
                     <div class="form-group">
-                        <label for="helpName">Name</label>
-                        <input type="text" class="form-input" id="helpName" placeholder="Your name" name="Name" required>
+                        <label for="helpName">@FF_Name</label>
+                        <input type="text" class="form-input" id="helpName" placeholder="@FF_Name_Sample" name="Name" required> <!-- DO NOT CHANGE THE NAME ATTRIBUTES, THEY ARE VITAL TO COMMUNICATION BETWEEN FRONT AND BACK END -->
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
-                        <label for="helpEmail">Email</label>
-                        <input type="email" class="form-input" id="helpEmail" placeholder="Email" name="Email" required>
+                        <label for="helpEmail">@FF_Email</label>
+                        <input type="email" class="form-input" id="helpEmail" placeholder="@FF_Email_Sample" name="Email" required>
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group checkbox checkbox--multi">
-                        <p>I can</p>
+                        <p>@ICan</p>
                         <label>
-                            <input type="checkbox" name="Capability" value="build links" /> Help build links with organizations and communities
+                            <input type="checkbox" name="Capability" value="build links" /> @WayToHelp1
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="community organize" /> Organize my own community
+                            <input type="checkbox" name="Capability" value="community organize" /> @WayToHelp2
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="collaboration" /> Set up collaboration with my organization
+                            <input type="checkbox" name="Capability" value="collaboration" /> @WayToHelp3
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="awareness" /> Help get the word out
+                            <input type="checkbox" name="Capability" value="awareness" /> @WayToHelp4
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="research" /> Do research
+                            <input type="checkbox" name="Capability" value="research" /> @WayToHelp5
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="legal" /> Offer legal expertise
+                            <input type="checkbox" name="Capability" value="legal" /> @WayToHelp6
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="tech" /> Contribute my tech wizardry
+                            <input type="checkbox" name="Capability" value="tech" /> @WayToHelp7
                         </label>
                         <label>
-                            <input type="checkbox" name="Capability" value="raise money" /> Help the project raise money
+                            <input type="checkbox" name="Capability" value="raise money" /> @WayToHelp8
                         </label>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="button button--large" id="offerHelpSubmit">Submit</button>
+                        <button type="submit" class="button button--large" id="offerHelpSubmit">@SubmitButtonText</button>
                     </div>
                 </form>
             </div>
@@ -481,7 +710,7 @@
                     <a href="http://www.866ourvote.org/"><img class="align-right" src="res/img/election-protection.png"/></a>
                     <p>The <a href="http://www.866ourvote.org/">Election Protection Coalition</a> works around the clock to advance and defend your right to vote.
                     </p>
-                    <p>Report voting problems, and get voting relating info for your state.</p>
+                    <p>@ReportVotingProbs</p>
                     <ul>
                         <li>Visit <a href="http://www.866ourvote.org/">866ourvote.org</a></li>
                         <li>Call <a href="tel:8666878683">866-OUR-VOTE</a></li>
@@ -494,9 +723,9 @@
                 <div class="bannerbox__content">
                     <a href="http://veyvota.yaeshora.info/"><img class="align-right" src="res/img/election-protection.png"/></a>
                     <p>
-                        The <a href="http://veyvota.yaeshora.info/">Election Protection Coalition</a> works around the clock to advance and defend your right to vote.
+                        The <a href="http://veyvota.yaeshora.info/">Election Protection Coalition</a> 
                     </p>
-                    <p>Report voting problems, and get voting relating info for your state.</p>
+                    <p>@ReportVotingProbs</p>
                     <ul>
                         <li>Visit <a href="http://veyvota.yaeshora.info/">veyvota.yaeshora.info</a></li>
                         <li>Call <a href="tel:8888398682">(888)VE-Y-VOTA</a></li>
@@ -506,13 +735,15 @@
         </div>
         <div>
         </div>
+
         <div class="bannerbox" id="countdown">
-            <h3 class="bannerbox__title">2016 Election Countdown Clock</h3>
+            <h3 class="bannerbox__title">@CountdownClockHeader</h3>
             <div class="bannerbox__content">
                 <iframe src="http://www.270towin.com/2016-countdown-clock/widget300x200.php" width="300" height="200" border="0" frameBorder="0">
                     Browser not supported. Visit <a href="http://www.270towin.com/">www.270towin.com</a>
                 </iframe>
             </div>
         </div>
-    </div>
+
+	</div>
 </div>

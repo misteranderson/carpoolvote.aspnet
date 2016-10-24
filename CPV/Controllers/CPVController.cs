@@ -16,7 +16,32 @@ namespace CPV.Controllers
 
         public virtual IActionResult Index(string themeName, string lang)
         {
+			// CPVBasicViewModel viewMdl = new CPVBasicViewModel() {
+            //         LanguageCode = lang,
+            //         LanguageName = langName,
+            //         ThemeName = themeName,
+            //         BrandName = brandName
+            //     };
+			
+            return View(
+                CommonGetViewModel(themeName,lang)
+            );
 
+        }
+		
+		
+		public virtual IActionResult ShowView(string viewName, string themeName, string lang)
+        {
+				return View(viewName,CommonGetViewModel(themeName,lang));
+		}
+		
+		public CPVBasicViewModel CommonGetViewModel(string themeName, string lang)
+		{
+			return CommonGetViewModel(themeName, lang,"");
+		}
+
+		public CPVBasicViewModel CommonGetViewModel(string themeName, string lang, string UUID)
+        {
             //=======================================================
             // Language Selection:
             // Current Language
@@ -40,8 +65,8 @@ namespace CPV.Controllers
             //=======================================================
             // ViewData["CurrentLanguageName"] = "English";
             // ViewData["Language"] = "en_US"; //  Default Value
-            ViewData["CurrentLanguageName"] = langName;
-            ViewData["Language"] = lang;
+            ViewData["CurrentLanguageName"] = langName;		// Will these be set??? Who knows?
+            ViewData["Language"] = lang;					// Will these be set?? Who knows?
             //=======================================================
 
 
@@ -59,16 +84,15 @@ namespace CPV.Controllers
             }
             ViewData["ThemeName"] = themeName;
             //=======================================================
-
-            return View(
-                new CPVBasicViewModel() {
+		
+			return new CPVBasicViewModel() {
                     LanguageCode = lang,
                     LanguageName = langName,
                     ThemeName = themeName,
                     BrandName = brandName
-                }
-            );
-
-        }
+                };
+	
+		}
+		
     }
 }

@@ -20,7 +20,6 @@ body {
     background-color: #eee;
 }
 
-
 /* Utilities */
 
 .wrapper {
@@ -225,9 +224,41 @@ a.twitter-mention-button {
     border-right: solid 1px #297bbb;
 }
 
+.utility-bar {
+    background-color: #f2f2f2;
+    font-size: 14px;
+	padding-bottom:36px;
+	padding-top:12px;
+}
+
+.utility-bar-right {
+    float: right;
+    text-align: right;
+    margin-top: 3px;
+    margin-right: 10px;
+    margin-bottom: 3px;
+}
+
+/* 
+	STORY, HOW, SUPPORT - support has no right-hand border...
+*/
 .nav__support {
     border-right: 0;
 }
+
+.nav__languages {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.nav__language {
+    padding: 0 10px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
 
 .nav__link {
     padding: 0 10px;
