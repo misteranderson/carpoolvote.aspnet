@@ -26,7 +26,6 @@ namespace CPV.Controllers
             return View(
                 CommonGetViewModel(themeName,lang)
             );
-
         }
 		
 		
